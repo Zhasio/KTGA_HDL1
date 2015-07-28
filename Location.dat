@@ -1,2 +1,2 @@
-METADATA|Location|LocationCode|SetId|SetCode|ActiveStatus|OfficialLanguageCode|ShipToSiteFlag|ReceivingSiteFlag|BillToSiteFlag|OfficeSiteFlag|GeoHierarchyNodeCode|LocationName|Description|AddressLine1|Country|PostalCode|Region1|Region2|TownOrCity|EffectiveStartDate|EffectiveEndDate
-MERGE|Location|BC_BOLASHAK||COMMON|A|KZ|Y|Y|Y|Y|32|БЦ Болашак|БЦ Болашак|БЦ Болашак|KZ|010000|Astana|KZ|Астана|1900/01/01|4712/12/31
+METADATA|Location|LocationCode|SetId|SetCode|ActiveStatus|OfficialLanguageCode|ShipToSiteFlag|ReceivingSiteFlag|BillToSiteFlag|OfficeSiteFlag|LocationName|Description|AddressLine1|Country|PostalCode|Region1|Region2|TownOrCity|EffectiveStartDate|EffectiveEndDate
+MERGE|Location|BC_BOLASHAK||COMMON|A|KZ|Y|Y|Y|Y|БЦ Болашак|БЦ Болашак|БЦ Болашак|KZ|010000|Astana|KZ|Астана|1900/01/01|4712/12/31
