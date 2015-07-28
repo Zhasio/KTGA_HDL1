@@ -1,0 +1,2 @@
+METADATA|Location|LocationId|SetId|SetCode|ActiveStatus|OfficialLanguageCode|ShipToSiteFlag|ReceivingSiteFlag|BillToSiteFlag|OfficeSiteFlag|GeoHierarchyNodeCode|LocationCode|LocationName|Description|AddressLine1|Country|PostalCode|Region1|Region2|TownOrCity|EffectiveStartDate|EffectiveEndDate
+MERGE|Location|BC_NURSAYA||COMMON|A|KZ|Y|Y|Y|Y|32|BC_BOLASHAK|БЦ Болашак|БЦ Болашак|БЦ Болашак|KZ|010000|Astana|KZ|Астана|1900-01-01|4712-12-31
