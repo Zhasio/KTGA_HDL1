@@ -1,2 +1,2 @@
-METADATA|Location|LocationCode|SetId|SetCode|ActiveStatus|OfficialLanguageCode|ShipToSiteFlag|ReceivingSiteFlag|BillToSiteFlag|OfficeSiteFlag|LocationName|Description|AddressLine1|Country|PostalCode|Region1|Region2|TownOrCity|EffectiveStartDate|EffectiveEndDate
-MERGE|Location|BC_BOLASHAK||COMMON|A|US|Y|Y|Y|Y|БЦ Болашак|БЦ Болашак|БЦ Болашак|KZ|010000|Astana|KZ|Астана|1900/01/01|4712/12/31
+METADATA|Location|LocationCode|LocationImageURL|SetId|SetCode|ActiveStatus|OfficialLanguageCode|ShipToSiteFlag|ReceivingSiteFlag|BillToSiteFlag|OfficeSiteFlag|LocationName|Description|AddressLine1|Country|PostalCode|Region1|Region2|TownOrCity|EffectiveStartDate|EffectiveEndDate
+MERGE|Location|BC_BOLASHAK|http://www.kaztransgas.kz/templates/kaztransgas/images/building_bg.jpg||COMMON|A|RU|Y|Y|Y|Y|БЦ Болашак|БЦ Болашак|БЦ Болашак|KZ|010000|Astana|KZ|Астана|1900/01/01|4712/12/31
