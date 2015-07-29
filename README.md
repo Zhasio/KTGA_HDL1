@@ -1,6 +1,3 @@
 # KTGA HDL
 
-sasdads
-
-
-masters 
+HDL & FBL files of KTGA
