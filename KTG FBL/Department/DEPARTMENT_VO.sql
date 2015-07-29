@@ -18,7 +18,7 @@ WHEN П.`Состояние`='1' THEN '4712-12-31 00:00:00'
 WHEN П.`Состояние`='2'  
 THEN 
 (
-SELECT MAX(ПС.EFFECTIVE_END_DATE) + INTERVAL 1 DAY 
+SELECT MAX(ПС.EFFECTIVE_END_DATE) 
 FROM (
 	     SELECT ПРД.`Дата`   AS EFFECTIVE_START_DATE
 			,CASE 
@@ -181,7 +181,7 @@ CONCAT('КТГ ',TRIM(ПЗ.`Наименование`)) as NAME,
 'DEPT_TBL' as FT_ALTERNATE_REC,
 CONCAT('KTG_DEP_', CRC32(UPPER(TRIM(ПЗ.`Наименование`)))) as FT_ALTERNATE_KEY
 FROM kontrotenko_ktg.`Подразделения` ПЗ
-WHERE ПЗ.Состояние!='1' AND   (SELECT MAX(ПИ.`ДатаКон`) FROM kontrotenko_ktg.`ПодразделенияИстория` ПИ WHERE CRC32(UPPER(TRIM(ПИ.`НаименованиеИстория`)))=CRC32(UPPER(TRIM(ПЗ.`Наименование`)))) IS NOT NULL 
+WHERE ПЗ.Состояние!='1' /* AND   (SELECT MAX(ПИ.`ДатаКон`) FROM kontrotenko_ktg.`ПодразделенияИстория` ПИ WHERE CRC32(UPPER(TRIM(ПИ.`НаименованиеИстория`)))=CRC32(UPPER(TRIM(ПЗ.`Наименование`)))) IS NOT NULL */
 GROUP BY CRC32(UPPER(TRIM(ПЗ.`Наименование`)))
 ) T
 ) KTG
@@ -204,7 +204,7 @@ WHEN П.Состояние=1 THEN '4712-12-31 00:00:00'
 WHEN П.Состояние=2  
 THEN 
 (
-SELECT MAX(ПС.EFFECTIVE_END_DATE) + INTERVAL 1 DAY 
+SELECT MAX(ПС.EFFECTIVE_END_DATE) 
 FROM (
 	     SELECT ПРД.`Дата`   AS EFFECTIVE_START_DATE
 			,CASE 			
@@ -363,7 +363,7 @@ CONCAT('КТГА ',TRIM(ПЗ.`Наименование`)) as NAME,
 'DEPT_TBL' as FT_ALTERNATE_REC,
 CONCAT('KTGA_DEP_', CRC32(UPPER(TRIM(ПЗ.`Наименование`)))) as FT_ALTERNATE_KEY
 FROM kontrotenko_ktga.`Подразделения` ПЗ
-WHERE ПЗ.Состояние!='1' AND  (SELECT MAX(ПИ.`ДатаКон`) FROM kontrotenko_ktga.`ПодразделенияИстория` ПИ WHERE CRC32(UPPER(TRIM(ПИ.`НаименованиеИстория`)))=CRC32(UPPER(TRIM(ПЗ.`Наименование`)))  ) IS NOT NULL 
+WHERE ПЗ.Состояние!='1' /*AND  (SELECT MAX(ПИ.`ДатаКон`) FROM kontrotenko_ktga.`ПодразделенияИстория` ПИ WHERE CRC32(UPPER(TRIM(ПИ.`НаименованиеИстория`)))=CRC32(UPPER(TRIM(ПЗ.`Наименование`)))  ) IS NOT NULL */
 GROUP BY CRC32(UPPER(TRIM(ПЗ.`Наименование`)))
 ) T
 
