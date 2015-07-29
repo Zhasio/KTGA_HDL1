@@ -1,14 +1,14 @@
-METADATA|Organization|EffectiveStartDate|EffectiveEndDate|Name|ClassificationName|LocationCode|LocationSetCode|LegalEntityId
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз" ЦА BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "Интергаз" ЦА BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ЦА BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Актау BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Атырау BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Восточный Казахстан BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Западный Казахстан BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Жетису BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Жамбул BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Костанай BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Кызылорда BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Мангыстау BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
-MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Южный Казастан BU|Business Unit|BC_BOLASHAK|COMMON|300000000909091
+METADATA|Organization|EffectiveStartDate|EffectiveEndDate|Name|ClassificationCode|ClassificationName|LocationCode|LocationSetCode
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз" ЦА BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "Интергаз" ЦА BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ЦА BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Актау BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Атырау BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Восточный Казахстан BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Западный Казахстан BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Жетису BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Жамбул BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Костанай BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Кызылорда BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Мангыстау BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
+MERGE|Organization|1900/01/01|4712/12/31|V2_АО "КазТрансГаз Аймак" ПФ Южный Казастан BU|FUN_BUSINESS_UNIT|Business Unit|BC_BOLASHAK|COMMON
