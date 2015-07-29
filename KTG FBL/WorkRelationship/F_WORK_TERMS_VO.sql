@@ -55,7 +55,7 @@ END
 '' as DUTIES_TYPE
 ,
 CASE 
-WHEN П.`ГруппаПриказа`='3' THEN '4712/12/31' /*  Если уволен то Дата конца = до бесконечности 4712-12-31  */
+WHEN П.`ГруппаПриказа`='3' THEN '4712/12/31' /*  Если уволен то Дата конца = до бесконечности 4712/12/31  */
 WHEN П.`ГруппаПриказа`='2' THEN
 ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY ,'%Y/%m/%d') FROM prykazy КН 
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
@@ -74,7 +74,7 @@ AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1) IS NOT NULL
 THEN ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY ,'%Y/%m/%d') FROM prykazy КН 
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)    /* Если  */ 
-ELSE '4712/12/31' /*Иначе Дата конца = до бесконечности 4712-12-31 */
+ELSE '4712/12/31' /*Иначе Дата конца = до бесконечности 4712/12/31 */
  END  AS EFFECTIVE_END_DATE
 ,
 'Y' as EFFECTIVE_LATEST_CHANGE
@@ -222,9 +222,9 @@ CASE WHEN (((SELECT COUNT(1) FROM prykazy РХ WHERE РХ.PERSON_ID=П.PERSON_ID
 ,
 '' as WORK_TERMS_ASSIGNMENT_ID
 ,
-'4712-12-31' as FREEZE_START_DATE
+'4712/12/31' as FREEZE_START_DATE
 ,
-'1901-01-01' as FREEZE_UNTIL_DATE
+'1901/01/01' as FREEZE_UNTIL_DATE
 ,
 'WT' as FT_ALTERNATE_REC
 ,
