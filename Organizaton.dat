@@ -1,0 +1,14 @@
+METADATA|Organization|EffectiveStartDate|EffectiveEndDate|OrganizationId|Name|ClassificationCode|LocationCode|LocationSetCode|LegalEntityIdentifier
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "KazTransGaz" CA BU|V2_АО "КазТрансГаз" ЦА BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "Intergaz" CA BU|V2_АО "Интергаз" ЦА BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "KazTransGaz Aimak" CA BU|V2_АО "КазТрансГаз Аймак" ЦА BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "KazTransGaz Aimak" PF Aktau BU|V2_АО "КазТрансГаз Аймак" ПФ Актау BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "KazTransGaz Aimak" PF Atyrau BU|V2_АО "КазТрансГаз Аймак" ПФ Атырау BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "KazTransGaz Aimak" PF Vostochnyj Kazahstan BU|V2_АО "КазТрансГаз Аймак" ПФ Восточный Казахстан BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "KazTransGaz Aimak" PF Zapadnyj Kazahstan BU|V2_АО "КазТрансГаз Аймак" ПФ Западный Казахстан BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "KazTransGaz Aimak" PF Zhetisu BU|V2_АО "КазТрансГаз Аймак" ПФ Жетису BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "KazTransGaz Aimak" PF Zhambul BU|V2_АО "КазТрансГаз Аймак" ПФ Жамбул BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "KazTransGaz Aimak" PF Kostanaj BU|V2_АО "КазТрансГаз Аймак" ПФ Костанай BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "KazTransGaz Aimak" PF Kyzylorda BU|V2_АО "КазТрансГаз Аймак" ПФ Кызылорда BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "KazTransGaz Aimak" PF Mangystau BU|V2_АО "КазТрансГаз Аймак" ПФ Мангыстау BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
+MERGE|Organization|1900/01/01|4712/12/31|V2_AO "KazTransGaz Aimak" PF Juzhnyj Kazastan BU|V2_АО "КазТрансГаз Аймак" ПФ Южный Казастан BU|FUN_BUSINESS_UNIT|BC_NURSAYA|COMMON|AKPF
