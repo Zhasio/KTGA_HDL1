@@ -4,7 +4,7 @@ WHEN (((SELECT COUNT(1) FROM prykazy РХ WHERE РХ.PERSON_ID=П.PERSON_ID
  AND РХ.`ГруппаПриказа`=1) > 1)
  AND ( (SELECT MIN(РХ.Дата) FROM prykazy РХ 
  WHERE РХ.PERSON_ID=П.PERSON_ID AND РХ.`ГруппаПриказа`=1) != П.Дата)
-  AND (П.ГруппаПриказа=1)) 
+  AND (П.ГруппаПриказа=1)) /*Количество Приема Больше 2 значить REHIRE */
 THEN 'REHIRE' 
 WHEN П.`ГруппаПриказа`=1 
 THEN 'HIRE' 
@@ -15,11 +15,11 @@ WHEN П.`ГруппаПриказа`=3
 ,'' AS ACTION_OCCURRENCE_ID
 , 
 CONCAT('ASSIG',
-CASE WHEN П.`ГруппаПриказа`=1 THEN П.ASSIGNMENT_ID ELSE
+CASE WHEN П.`ГруппаПриказа`=1 THEN П.ASSIGNMENT_ID /*Если Приме то указываем AssigmentId текущей записи*/
+ELSE
 (SELECT ПЕР.ASSIGNMENT_ID FROM prykazy ПЕР
 WHERE ПЕР.ГруппаПриказа=1 AND ПЕР.PERSON_ID=П.PERSON_ID AND ПЕР.`Дата` < П.`Дата`
- 
-ORDER BY ПЕР.`Дата` DESC LIMIT 1)
+ORDER BY ПЕР.`Дата` DESC LIMIT 1) /*Иначе Assigment_id Это предующий записи приема*/
 END) AS ASSIGNMENT_ID
 , CONCAT('ASSIG',CASE WHEN П.`ГруппаПриказа`=1 THEN П.ASSIGNMENT_ID ELSE
 (SELECT ПЕР.ASSIGNMENT_ID FROM prykazy ПЕР
@@ -30,8 +30,8 @@ END) AS ASSIGNMENT_NAME
 ,'' AS ASSIGNMENT_NUMBER
 ,(SELECT COUNT(1) FROM prykazy СЕК
  WHERE СЕК.PERSON_ID=П.PERSON_ID 
- AND СЕК.`ГруппаПриказа`=1 AND СЕК.`Дата` <= П.Дата) AS ASSIGNMENT_SEQUENCE
-,CASE WHEN П.ГруппаПриказа=3 THEN 'INACTIVE' ELSE 'ACTIVE'
+ AND СЕК.`ГруппаПриказа`=1 AND СЕК.`Дата` <= П.Дата) AS ASSIGNMENT_SEQUENCE /* Количество приемов До текущей записи */
+,CASE WHEN П.ГруппаПриказа=3 THEN 'INACTIVE' ELSE 'ACTIVE' /*Если Уволен то Неактивный назначение*/
  END AS ASSIGNMENT_STATUS_TYPE
 ,CASE WHEN П.ГруппаПриказа=3
 THEN '188772AEC26BAD11E053A647660A0CF2'
@@ -55,27 +55,32 @@ END
 ,'' AS DATE_PROBATION_END
 ,'' AS DEFAULT_CODE_COMB_ID
 ,'' AS DUTIES_TYPE
-,CASE WHEN П.`ГруппаПриказа`='3' THEN '4712-12-31'
+,
+CASE 
+WHEN П.`ГруппаПриказа`='3' THEN '4712/12/31' /*  Если уволен то Дата конца = до бесконечности 4712-12-31  */
 WHEN П.`ГруппаПриказа`='2' THEN
-( SELECT DATE_FORMAT(КН.ДАТА,'%Y-%m-%d') FROM prykazy КН 
+( SELECT DATE_FORMAT(КН.ДАТА,'%Y/%m/%d') - INTERVAL 1 DAY  FROM prykazy КН 
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
-AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)
-WHEN ( SELECT КН.ГруппаПриказа 
+AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)  /* Если перевод то Дата конца = Дата следующий записи - 1 день */
+WHEN 
+( SELECT КН.ГруппаПриказа 
 FROM prykazy КН WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
-AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1)='2' THEN
-( SELECT DATE_FORMAT(КН.ДАТА,'%Y-%m-%d') FROM prykazy КН 
+AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1)='2' 
+THEN
+( SELECT DATE_FORMAT(КН.ДАТА,'%Y/%m/%d') FROM prykazy КН 
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
-AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)
-WHEN ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY,'%Y-%m-%d') 
+AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)    /* Если следующая запись перевод то Дата конца = Дата следующий записи */
+WHEN ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY,'%Y/%m/%d') 
 FROM prykazy КН WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1) IS NOT NULL 
-THEN ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY ,'%Y-%m-%d') FROM prykazy КН 
+THEN ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY ,'%Y/%m/%d') FROM prykazy КН 
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
-AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1) ELSE '4712-12-31'
+AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)    /* Если  */ 
+ELSE '4712/12/31' /*Иначе Дата конца = до бесконечности 4712-12-31 */
  END  AS EFFECTIVE_END_DATE
 ,'Y' AS EFFECTIVE_LATEST_CHANGE
 ,'1' AS EFFECTIVE_SEQUENCE
-,DATE_FORMAT( /*CASE WHEN П.ГруппаПриказа=3 THEN ( П.`Дата` + INTERVAL 1 DAY ) ELSE */ П.`Дата` /* END */,'%Y-%m-%d')  AS EFFECTIVE_START_DATE
+,DATE_FORMAT( /*CASE WHEN П.ГруппаПриказа=3 THEN ( П.`Дата` + INTERVAL 1 DAY ) ELSE */ П.`Дата` /* END */,'%Y/%m/%d')  AS EFFECTIVE_START_DATE
 ,'' AS EMPLOYEE_CATEGORY
 ,'FR' AS EMPLOYMENT_CATEGORY
 ,'' AS ESTABLISHMENT_ID
@@ -162,8 +167,8 @@ WHERE ПЕР.ГруппаПриказа=1 AND ПЕР.PERSON_ID=П.PERSON_ID AND 
 ORDER BY ПЕР.`Дата` DESC LIMIT 1)
 END
 ) AS WORK_TERMS_ASSIGNMENT_ID
-,'4712-12-31' AS FREEZE_START_DATE
-,'1901-01-01' AS FREEZE_UNTIL_DATE
+,'4712/12/31' AS FREEZE_START_DATE
+,'1901/01/01' AS FREEZE_UNTIL_DATE
 ,'WT' AS FT_ALTERNATE_REC
 ,
  CONCAT('ASSIG',

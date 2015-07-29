@@ -54,17 +54,33 @@ END
 ,
 '' as DUTIES_TYPE
 ,
-CASE WHEN П.`ГруппаПриказа`=3 THEN '4712-12-31'
-WHEN ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY ,'%Y-%m-%d') FROM prykazy КН WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) AND КН.`Дата` > П.`Дата`  ORDER BY КН.`Дата` LIMIT 1) IS NOT NULL 
-THEN ( SELECT  DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY ,'%Y-%m-%d') FROM prykazy КН 
-WHERE КН.PERSON_ID=П.PERSON_ID 
-AND КН.`ГруппаПриказа` IN(1,2,3) AND КН.`Дата` > П.`Дата`   ORDER BY КН.`Дата` LIMIT 1) ELSE '4712-12-31' END
-as EFFECTIVE_END_DATE
+CASE 
+WHEN П.`ГруппаПриказа`='3' THEN '4712/12/31' /*  Если уволен то Дата конца = до бесконечности 4712-12-31  */
+WHEN П.`ГруппаПриказа`='2' THEN
+( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY ,'%Y/%m/%d') FROM prykazy КН 
+WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
+AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)  /* Если перевод то Дата конца = Дата следующий записи - 1 день */
+WHEN 
+( SELECT КН.ГруппаПриказа 
+FROM prykazy КН WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
+AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1)='2' 
+THEN
+( SELECT DATE_FORMAT(КН.ДАТА,'%Y/%m/%d') FROM prykazy КН 
+WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
+AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)    /* Если следующая запись перевод то Дата конца = Дата следующий записи */
+WHEN ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY,'%Y/%m/%d') 
+FROM prykazy КН WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
+AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1) IS NOT NULL 
+THEN ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY ,'%Y/%m/%d') FROM prykazy КН 
+WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
+AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)    /* Если  */ 
+ELSE '4712/12/31' /*Иначе Дата конца = до бесконечности 4712-12-31 */
+ END  AS EFFECTIVE_END_DATE
 ,
 'Y' as EFFECTIVE_LATEST_CHANGE
 ,
 1 as EFFECTIVE_SEQUENCE
-,DATE_FORMAT( /*CASE WHEN П.ГруппаПриказа=3 THEN ( П.`Дата` + INTERVAL 1 DAY ) ELSE */ П.`Дата` /* END */,'%Y-%m-%d')  AS EFFECTIVE_START_DATE
+,DATE_FORMAT( /*CASE WHEN П.ГруппаПриказа=3 THEN ( П.`Дата` + INTERVAL 1 DAY ) ELSE */ П.`Дата` /* END */,'%Y/%m/%d')  AS EFFECTIVE_START_DATE
 
 ,
 '' as EMPLOYEE_CATEGORY
