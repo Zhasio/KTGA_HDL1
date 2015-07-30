@@ -38,5 +38,5 @@ WHERE ПЕР.ГруппаПриказа=1 AND ПЕР.PERSON_ID=П.PERSON_ID AND 
 ORDER BY ПЕР.`Дата` DESC LIMIT 1)
 END,'::WR') as FT_ALTERNATE_KEY
 FROM prykazy П
-WHERE  П.ГруппаПриказа IN(1)  
+WHERE  П.ГруппаПриказа IN(1) AND П.PERSON_ID='2345998950'
 ORDER BY П.Дата

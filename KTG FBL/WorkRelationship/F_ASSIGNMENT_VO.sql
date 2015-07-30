@@ -58,18 +58,19 @@ END
 ,
 CASE 
 WHEN П.`ГруппаПриказа`='3' THEN '4712/12/31' /*  Если уволен то Дата конца = до бесконечности 4712/12/31  */
-WHEN П.`ГруппаПриказа`='2' THEN
+/*WHEN П.`ГруппаПриказа`='2' THEN
 ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY ,'%Y/%m/%d') FROM prykazy КН 
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)  /* Если перевод то Дата конца = Дата следующий записи - 1 день */
-WHEN 
+/*WHEN 
 ( SELECT КН.ГруппаПриказа 
 FROM prykazy КН WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1)='2' 
 THEN
 ( SELECT DATE_FORMAT(КН.ДАТА,'%Y/%m/%d') FROM prykazy КН 
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
-AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)    /* Если следующая запись перевод то Дата конца = Дата следующий записи */
+AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1) 
+*/   /* Если следующая запись перевод то Дата конца = Дата следующий записи */
 WHEN ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY,'%Y/%m/%d') 
 FROM prykazy КН WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1) IS NOT NULL 
@@ -124,8 +125,11 @@ END) AS PERIOD_OF_SERVICE_ID
 ,'' AS POSITION_ID
 ,'Y' AS POSITION_OVERRIDE_FLAG
 ,'' AS POSTING_CONTENT_ID
-,'Y' AS PRIMARY_ASSIGNMENT_FLAG
-,'Y' AS PRIMARY_FLAG
+,CASE WHEN (SELECT ПЕР.`Дата` FROM prykazy ПЕР
+WHERE ПЕР.ГруппаПриказа=3 AND ПЕР.`КодСотрудника`=П.`КодСотрудника` 
+AND ПЕР.`Дата` > П.`Дата`
+ORDER BY ПЕР.`Дата` LIMIT 1) THEN 'N' ELSE 'Y' END AS PRIMARY_ASSIGNMENT_FLAG
+,'Y' as PRIMARY_FLAG
 ,'Y' AS PRIMARY_WORK_RELATION_FLAG
 ,'' AS PRIMARY_WORK_TERMS_FLAG
 ,'' AS PROBATION_PERIOD
@@ -182,4 +186,5 @@ END
 ,'::ASSIGNMENT') AS FT_ALTERNATE_KEY
 
 FROM prykazy П
+where  П.PERSON_ID='2345998950'
 ORDER BY П.PERSON_ID ,П.Дата

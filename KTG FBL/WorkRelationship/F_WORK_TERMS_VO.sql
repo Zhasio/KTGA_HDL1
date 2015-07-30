@@ -35,7 +35,7 @@ CASE WHEN П.`ГруппаПриказа`=3 THEN '188772AEC26BAD11E053A647660A0C
 ,
 '188772AEC11AAD11E053A647660A0CF2' as BUSINESS_GROUP_ID
 ,
-CASE WHEN П.BU='KTG' THEN 'AO "KazTransGaz" CA BU'
+CASE WHEN П.BU='KTG' THEN 'AO "KazTransGaz" BU'
 ELSE 'AO "KazTransGaz Aimak" CA BU'
 END
  AS BUSINESS_UNIT_ID
@@ -56,18 +56,19 @@ END
 ,
 CASE 
 WHEN П.`ГруппаПриказа`='3' THEN '4712/12/31' /*  Если уволен то Дата конца = до бесконечности 4712/12/31  */
-WHEN П.`ГруппаПриказа`='2' THEN
+/*WHEN П.`ГруппаПриказа`='2' THEN
 ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY ,'%Y/%m/%d') FROM prykazy КН 
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)  /* Если перевод то Дата конца = Дата следующий записи - 1 день */
-WHEN 
+/*WHEN 
 ( SELECT КН.ГруппаПриказа 
 FROM prykazy КН WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1)='2' 
 THEN
 ( SELECT DATE_FORMAT(КН.ДАТА,'%Y/%m/%d') FROM prykazy КН 
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
-AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)    /* Если следующая запись перевод то Дата конца = Дата следующий записи */
+AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1) 
+*/   /* Если следующая запись перевод то Дата конца = Дата следующий записи */
 WHEN ( SELECT DATE_FORMAT(КН.ДАТА - INTERVAL 1 DAY,'%Y/%m/%d') 
 FROM prykazy КН WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1) IS NOT NULL 
@@ -239,5 +240,5 @@ END
 ,
 '::WorkTerm') as FT_ALTERNATE_KEY
 FROM prykazy П 
-WHERE  П.ГруппаПриказа IN(1,2,3) 
+WHERE  П.ГруппаПриказа IN(1,2,3) AND П.PERSON_ID='2345998950'
 ORDER BY П.Дата
