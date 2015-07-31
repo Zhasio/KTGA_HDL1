@@ -57,7 +57,9 @@ END
 ,'' AS DUTIES_TYPE
 ,
 CASE 
-WHEN П.ГруппаПриказа = 1 THEN (SELECT DATE_FORMAT(КН.ДАТА  ,'%Y/%m/%d') FROM prykazy КН 
+WHEN П.ГруппаПриказа = 1 AND ( SELECT КН.ГруппаПриказа 
+FROM prykazy КН WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
+AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1)!='2'  THEN (SELECT DATE_FORMAT(КН.ДАТА  ,'%Y/%m/%d') FROM prykazy КН 
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)
 WHEN П.`ГруппаПриказа`='3' THEN '4712/12/31' /*  Если уволен то Дата конца = до бесконечности 4712/12/31  */
@@ -194,5 +196,5 @@ END
 ,'::ASSIGNMENT') AS FT_ALTERNATE_KEY
 
 FROM prykazy П
-where П.PERSON_ID='3672922075'
+where П.PERSON_ID='3672922075' 
 ORDER BY П.PERSON_ID ,П.Дата
