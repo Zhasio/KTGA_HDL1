@@ -27,7 +27,7 @@ CASE WHEN П.`ГруппаПриказа`=3 THEN '188772AEC26BAD11E053A647660A0C
 ,
 'ET' as ASSIGNMENT_TYPE
 ,
-'Y' as AUTO_END_FLAG
+'N' as AUTO_END_FLAG
 ,
 '' as BARGAINING_UNIT_CODE
 ,
@@ -165,13 +165,21 @@ CONCAT('P'
 ,
 '' as POSTING_CONTENT_ID
 ,
+/*CASE WHEN (SELECT ПЕР.`Дата` FROM prykazy ПЕР
+WHERE ПЕР.ГруппаПриказа=3 AND ПЕР.`КодСотрудника`=П.`КодСотрудника` 
+AND ПЕР.`Дата` > П.`Дата`
+ORDER BY ПЕР.`Дата` LIMIT 1) THEN 'N' ELSE 'Y' END */
 'N' as PRIMARY_ASSIGNMENT_FLAG
 ,
+/*CASE WHEN (SELECT ПЕР.`Дата` FROM prykazy ПЕР
+WHERE ПЕР.ГруппаПриказа=3 AND ПЕР.`КодСотрудника`=П.`КодСотрудника` 
+AND ПЕР.`Дата` > П.`Дата`
+ORDER BY ПЕР.`Дата` LIMIT 1) THEN 'N' ELSE 'Y' END*/
 'N' as PRIMARY_FLAG
 ,
 'Y' as PRIMARY_WORK_RELATION_FLAG
 ,
-'Y' as PRIMARY_WORK_TERMS_FLAG
+'N' as PRIMARY_WORK_TERMS_FLAG
 ,
 '' as PROBATION_PERIOD
 ,
@@ -225,7 +233,7 @@ CASE WHEN (((SELECT COUNT(1) FROM prykazy РХ WHERE РХ.PERSON_ID=П.PERSON_ID
 ,
 '4712/12/31' as FREEZE_START_DATE
 ,
-'1901/01/01' as FREEZE_UNTIL_DATE
+'0001/01/01' as FREEZE_UNTIL_DATE
 ,
 'WT' as FT_ALTERNATE_REC
 ,
@@ -240,5 +248,5 @@ END
 ,
 '::WorkTerm') as FT_ALTERNATE_KEY
 FROM prykazy П 
-WHERE  П.ГруппаПриказа IN(1,2,3) AND П.PERSON_ID='2345998950'
+WHERE  П.ГруппаПриказа IN(1,2,3) AND П.PERSON_ID='3672922075'
 ORDER BY П.Дата
