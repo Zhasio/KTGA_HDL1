@@ -81,8 +81,7 @@ ELSE '4712/12/31' /*Иначе Дата конца = до бесконечнос
 'Y' as EFFECTIVE_LATEST_CHANGE
 ,
 1 as EFFECTIVE_SEQUENCE
-,DATE_FORMAT( /*CASE WHEN П.ГруппаПриказа=3 THEN ( П.`Дата` + INTERVAL 1 DAY ) ELSE */ П.`Дата` /* END */,'%Y/%m/%d')  AS EFFECTIVE_START_DATE
-
+,DATE_FORMAT( CASE WHEN П.ГруппаПриказа=3 THEN ( П.`Дата` + INTERVAL 1 DAY ) ELSE  П.`Дата` END ,'%Y/%m/%d')  AS EFFECTIVE_START_DATE
 ,
 '' as EMPLOYEE_CATEGORY
 ,
