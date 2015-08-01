@@ -61,7 +61,9 @@ AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1)!='2'  THEN (S
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)
 WHEN П.`ГруппаПриказа`='3' THEN '4712/12/31' /*  Если уволен то Дата конца = до бесконечности 4712/12/31  */
-WHEN П.`ГруппаПриказа`='2' THEN
+WHEN П.`ГруппаПриказа`='2' AND ( SELECT КН.ГруппаПриказа 
+FROM prykazy КН WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
+AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1)!='2' THEN
 ( SELECT DATE_FORMAT(КН.ДАТА,'%Y/%m/%d') FROM prykazy КН 
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)  /* Если перевод то Дата конца = Дата следующий записи - 1 день */
@@ -252,5 +254,13 @@ END
 ,
 '::WorkTerm') as FT_ALTERNATE_KEY
 FROM prykazy П 
-WHERE  П.ГруппаПриказа IN(1,2,3) AND П.PERSON_ID='3672922075'
+WHERE  П.ГруппаПриказа IN(1,2,3) /*AND 
+П.PERSON_ID='4036031626' /*NOT IN (2378817912,
+1913299945,
+2378817912,
+1913299945,
+2378817912,
+1913299945,
+1376518947,
+3369705225)*/
 ORDER BY П.Дата

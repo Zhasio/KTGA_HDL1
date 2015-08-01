@@ -3,8 +3,8 @@ SELECT
 ,0 as ACTION_OCCURRENCE_ID
 ,
 DATE_FORMAT((SELECT ПЕР.`Дата` FROM prykazy ПЕР
-WHERE ПЕР.ГруппаПриказа=3 AND ПЕР.`КодСотрудника`=П.`КодСотрудника` 
-AND ПЕР.`Дата` > П.`Дата`
+WHERE ПЕР.ГруппаПриказа=3 AND ПЕР.PERSON_ID=П.PERSON_ID AND ПЕР.`Дата` > П.`Дата`
+ 
 ORDER BY ПЕР.`Дата` LIMIT 1),'%Y/%m/%d') as ACTUAL_TERMINATION_DATE,
 '' as ADJUSTED_SVC_DATE,
 '188772AEC11AAD11E053A647660A0CF2' as BUSINESS_GROUP_ID,
@@ -12,8 +12,8 @@ ORDER BY ПЕР.`Дата` LIMIT 1),'%Y/%m/%d') as ACTUAL_TERMINATION_DATE,
 ,DATE_FORMAT(П.`Дата`,'%Y/%m/%d') as DATE_START
 ,'N' as FAST_PATH_EMPLOYEE
 ,DATE_FORMAT((SELECT ПЕР.`Дата` FROM prykazy ПЕР
-WHERE ПЕР.ГруппаПриказа=3 AND ПЕР.`КодСотрудника`=П.`КодСотрудника` 
-AND ПЕР.`Дата` > П.`Дата`
+WHERE ПЕР.ГруппаПриказа=3 AND ПЕР.PERSON_ID=П.PERSON_ID AND ПЕР.`Дата` > П.`Дата`
+ 
 ORDER BY ПЕР.`Дата` LIMIT 1),'%Y/%m/%d') as LAST_WORKING_DATE
 ,CASE WHEN П.BU='KTG' THEN '188772AEC11BAD11E053A647660A0CF2'
 ELSE '188772AEC11CAD11E053A647660A0CF2' 
@@ -50,5 +50,6 @@ WHERE ПЕР.ГруппаПриказа=1 AND ПЕР.PERSON_ID=П.PERSON_ID AND 
 ORDER BY ПЕР.`Дата` DESC LIMIT 1)
 END,'::WR') as FT_ALTERNATE_KEY
 FROM prykazy П
-WHERE  П.ГруппаПриказа IN(1) AND П.PERSON_ID='3672922075'
+WHERE  П.ГруппаПриказа IN(1) /*AND П.PERSON_ID='4036031626'
+*/
 ORDER BY П.Дата

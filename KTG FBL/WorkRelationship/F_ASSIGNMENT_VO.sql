@@ -21,12 +21,13 @@ ELSE
 WHERE ПЕР.ГруппаПриказа=1 AND ПЕР.PERSON_ID=П.PERSON_ID AND ПЕР.`Дата` < П.`Дата`
 ORDER BY ПЕР.`Дата` DESC LIMIT 1) /*Иначе Assigment_id Это предующий записи приема*/
 END) AS ASSIGNMENT_ID
-, CONCAT('ASSIG',CASE WHEN П.`ГруппаПриказа`=1 THEN П.ASSIGNMENT_ID ELSE
-(SELECT ПЕР.ASSIGNMENT_ID FROM prykazy ПЕР
-WHERE ПЕР.ГруппаПриказа=1 AND ПЕР.PERSON_ID=П.PERSON_ID AND ПЕР.`Дата` < П.`Дата`
- 
-ORDER BY ПЕР.`Дата` DESC LIMIT 1)
-END) AS ASSIGNMENT_NAME
+,
+/* CASE WHEN (SELECT COUNT(1) FROM prykazy СЕК
+ WHERE СЕК.PERSON_ID=П.PERSON_ID 
+ AND СЕК.`ГруппаПриказа`=1 AND СЕК.`Дата` <= П.Дата)>1 THEN CONCAT(П.JOB_NAME,'-',(SELECT COUNT(1) FROM prykazy СЕК
+ WHERE СЕК.PERSON_ID=П.PERSON_ID 
+ AND СЕК.`ГруппаПриказа`=1 AND СЕК.`Дата` <= П.Дата)) ELSE П.JOB_NAME END */ 
+П.JOB_NAME AS ASSIGNMENT_NAME
 ,'' AS ASSIGNMENT_NUMBER
 ,(SELECT COUNT(1) FROM prykazy СЕК
  WHERE СЕК.PERSON_ID=П.PERSON_ID 
@@ -63,7 +64,9 @@ AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1)!='2' THEN (SE
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)
 WHEN П.`ГруппаПриказа`='3' THEN '4712/12/31' /*  Если уволен то Дата конца = до бесконечности 4712/12/31  */
-WHEN П.`ГруппаПриказа`='2' THEN
+WHEN П.`ГруппаПриказа`='2' AND ( SELECT КН.ГруппаПриказа 
+FROM prykazy КН WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
+AND КН.ДАТА > П.ДАТА  ORDER BY КН.`Дата` LIMIT 1)!='2'  THEN
 ( SELECT DATE_FORMAT(КН.ДАТА ,'%Y/%m/%d') FROM prykazy КН 
 WHERE КН.PERSON_ID=П.PERSON_ID AND КН.`ГруппаПриказа` IN(1,2,3) 
 AND КН.ДАТА  > П.ДАТА   ORDER BY КН.`Дата` LIMIT 1)  /* Если перевод то Дата конца = Дата следующий записи - 1 день */
@@ -195,6 +198,6 @@ ORDER BY ПЕР.`Дата` DESC LIMIT 1)
 END
 ,'::ASSIGNMENT') AS FT_ALTERNATE_KEY
 
-FROM prykazy П
-where П.PERSON_ID='3672922075' 
+FROM prykazy П 
+/*WHERE  П.PERSON_ID='4036031626'*/
 ORDER BY П.PERSON_ID ,П.Дата
