@@ -1,3 +1,6 @@
+SELECT ALLS.* FROM
+(
+SELECT KTG.* FROM (
 SELECT 
 CONCAT('PROFILE_',CRC32(UPPER(TRIM(С.ФИО)))) as PROFILE_ID,  
 CONCAT(С.`Фамилия`,', ',С.Имя) as DESCRIPTION,
@@ -10,5 +13,25 @@ CONCAT('PROFILE_',CRC32(UPPER(TRIM(С.ФИО))))  as PROFILE_CODE,
 CONCAT('P',CRC32(UPPER(TRIM(С.ФИО)))) as PERSON_ID,
 '' as PARTY_ID,
 '' as OWNER_PERSON_ID
-FROM kontrotenko_ktg.`Сотрудники` С 
-GROUP BY С.ФИО
+FROM kontrotenko_ktg.`Сотрудники` С , kontrotenko_ktg.`Приказы` П
+WHERE С.КодСотрудника=П.`КодСотрудника` AND П.`ГруппаПриказа` IN (1,2,3)
+GROUP BY С.ФИО) KTG
+UNION ALL
+SELECT KTGA.* FROM (
+SELECT 
+CONCAT('PROFILE_',CRC32(UPPER(TRIM(С.ФИО)))) as PROFILE_ID,  
+CONCAT(С.`Фамилия`,', ',С.Имя) as DESCRIPTION,
+CONCAT(С.`Фамилия`,', ',С.Имя)  as SUMMARY,
+'188772AEC11AAD11E053A647660A0CF2' as BUSINESS_GROUP_ID,
+'188772AEC2C7AD11E053A647660A0CF2' as PROFILE_TYPE_ID,
+CONCAT('PROFILE_',CRC32(UPPER(TRIM(С.ФИО))))  as PROFILE_CODE,
+'A' as PROFILE_STATUS_CODE,
+'P' as PROFILE_USAGE_CODE,
+CONCAT('P',CRC32(UPPER(TRIM(С.ФИО)))) as PERSON_ID,
+'' as PARTY_ID,
+'' as OWNER_PERSON_ID
+FROM kontrotenko_ktga.`Сотрудники` С , kontrotenko_ktga.`Приказы` П
+WHERE С.КодСотрудника=П.`КодСотрудника` AND П.`ГруппаПриказа` IN (1,2,3)
+GROUP BY С.ФИО) KTGA
+) ALLS
+GROUP BY ALLS.PERSON_ID
