@@ -13,6 +13,10 @@ THEN 'TRANSFER'
 WHEN П.`ГруппаПриказа`=3
  THEN 'TERMINATION' END AS ACTION_CODE
 ,'' AS ACTION_OCCURRENCE_ID
+,
+П.Номер as ASS_ATTRIBUTE1
+,
+DATE_FORMAT(П.Дата,'%Y/%m/%d')  as ASS_ATTRIBUTE_DATE_1
 , 
 CONCAT('ASSIG',
 CASE WHEN П.`ГруппаПриказа`=1 THEN П.ASSIGNMENT_ID /*Если Приме то указываем AssigmentId текущей записи*/
