@@ -84,7 +84,7 @@ DATE_FORMAT(СР.ДатаКон,'%Y-%m-%d') as ITEM_DATE_2,
 '' as ITEM_DECIMAL_3,
 '' as ITEM_DECIMAL_4,
 '' as ITEM_DECIMAL_5,
-(SELECT П.Дата FROM kontrotenko_ktg.Приказы П WHERE П.`КодСотрудника`=С.`КодСотрудника` AND П.`ГруппаПриказа` IN(1) ORDER BY П.`Дата` DESC LIMIT 1) as DATE_FROM,
+(SELECT DATE_FORMAT(П.Дата,'%Y-%m-%d') FROM kontrotenko_ktg.Приказы П WHERE П.`КодСотрудника`=С.`КодСотрудника` AND П.`ГруппаПриказа` IN(1) ORDER BY П.`Дата` DESC LIMIT 1) as DATE_FROM,
 '' as DATE_TO,
 '' as COUNTRY_ID,
 '' as STATE_PROVINCE_ID
